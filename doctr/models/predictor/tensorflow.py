@@ -47,6 +47,8 @@ class OCRPredictor(NestedObject, _OCRPredictor):
         assume_straight_pages: bool = True,
         export_as_straight_boxes: bool = False,
         straighten_pages: bool = False,
+        resolve_lines: bool = True,
+        resolve_blocks: bool = True,
     ) -> None:
 
         super().__init__()
