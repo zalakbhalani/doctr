@@ -35,6 +35,8 @@ class OCRPredictor(NestedObject, _OCRPredictor):
         straighten_pages: if True, estimates the page general orientation based on the median line orientation.
             Then, rotates page before passing it to the deep learning modules. The final predictions will be remapped
             accordingly. Doing so will improve performances for documents with page-uniform rotations.
+        resolve_lines: whether words should be automatically grouped into lines
+        resolve_blocks: whether lines should be automatically grouped into blocks
     """
     _children_names = ['det_predictor', 'reco_predictor']
 
@@ -50,7 +52,9 @@ class OCRPredictor(NestedObject, _OCRPredictor):
         super().__init__()
         self.det_predictor = det_predictor
         self.reco_predictor = reco_predictor
-        self.doc_builder = DocumentBuilder(export_as_straight_boxes=export_as_straight_boxes)
+        self.doc_builder = DocumentBuilder(export_as_straight_boxes=export_as_straight_boxes,
+                                           resolve_lines=resolve_lines,
+                                           resolve_blocks=resolve_blocks)
         self.assume_straight_pages = assume_straight_pages
         self.straighten_pages = straighten_pages
         self.crop_orientation_predictor = crop_orientation_predictor(pretrained=True)
